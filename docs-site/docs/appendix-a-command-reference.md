@@ -68,7 +68,8 @@ The working pattern (attempt 4 from Chapter 14 / blog post):
 MAW_JS="/home/neo/Code/github.com/Soul-Brews-Studio/maw-js"
 
 tmux new-session -d -s wasm-host -c "$MAW_JS"
-tmux send-keys -t wasm-host "claude --dangerously-skip-permissions -p '
+# Clean way — maw hey wraps tmux send-keys, handles cross-node over WireGuard
+maw hey wasm-host "claude --dangerously-skip-permissions -p '
   STEP 1: Read the issue — gh issue view 317
   STEP 2: Read code — src/cli/command-registry.ts
   STEP 3: Implement host functions
@@ -78,14 +79,15 @@ tmux send-keys -t wasm-host "claude --dangerously-skip-permissions -p '
   STEP 6: When done or stuck:
     maw hey mawjs-oracle \"[wasm-host] DONE: <branch>\"
     maw hey mawjs-oracle \"[wasm-host] STUCK: <reason>\"
-'" Enter
+'"
+# Under the hood it's: tmux send-keys -t wasm-host "claude --dangerously-skip-permissions -p '...'" Enter
 ```
 
 **Notes**:
 - `-d` detaches immediately; session runs in background.
 - `-c <dir>` sets the working directory.
 - `claude -p "<prompt>"` runs the prompt and exits. Bake all instructions, including reporting, into the initial prompt.
-- Follow-up instructions can be sent with a second `tmux send-keys` call, but the agent must still be alive to receive them.
+- Follow-up instructions can be sent with a second `maw hey` call (under the hood: `tmux send-keys`), but the agent must still be alive to receive them.
 
 ---
 
