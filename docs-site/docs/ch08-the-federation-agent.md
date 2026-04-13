@@ -1,3 +1,8 @@
+---
+sidebar_position: 9
+title: "Chapter 8: The Federation Agent"
+---
+
 # Chapter 8: The Federation Agent
 
 > "not in processmemory!" — Nat, the moment this chapter began
@@ -41,8 +46,7 @@ We will build up to this through the war story. But to anchor what we are trying
 MAW_JS="/home/neo/Code/github.com/Soul-Brews-Studio/maw-js"
 
 tmux new-session -d -s wasm-host -c "$MAW_JS"
-# Clean way — maw hey wraps tmux send-keys, handles cross-node over WireGuard
-maw hey wasm-host "claude --dangerously-skip-permissions -p '
+tmux send-keys -t wasm-host "claude --dangerously-skip-permissions -p '
   STEP 1: Read the issue — gh issue view 317
   STEP 2: Read code — src/cli/command-registry.ts
   STEP 3: Implement the four host functions
@@ -51,23 +55,10 @@ maw hey wasm-host "claude --dangerously-skip-permissions -p '
   STEP 5: ALWAYS report back:
           maw hey mawjs-oracle \"[wasm-host] DONE: <summary>\"
           maw inbox write \"wasm-host complete on feat/wasm-host-functions\"
-'"
-# Under the hood it's: tmux send-keys -t wasm-host "claude --dangerously-skip-permissions -p '...'" Enter
+'" Enter
 ```
 
 Three of these went out in parallel, one per WASM issue, differing only in session name (`wasm-host`, `rust-sdk`, `wasm-safety`) and the task body. The trailing "ALWAYS report back" clause is not boilerplate — it is the contract that makes the whole pattern work. Without it, agents finish silently.
-
-> **The right abstraction: `maw hey`**
->
-> Raw `tmux send-keys` works, but it's ugly — quoting, `Enter` key,
-> session:window addressing — and it doesn't federate across machines.
-> `maw hey <agent> <msg>` wraps it cleanly:
->
-> - Local: `maw hey book-writer "status?"`
-> - Cross-node: `maw hey white:book-writer "status?"` (via WireGuard)
->
-> Use `maw hey` everywhere. Reach for `tmux send-keys` only when
-> you're debugging maw itself.
 
 ## 8.4 The War Story: Four Attempts
 
@@ -100,12 +91,11 @@ Gap #2 revealed: **`maw wake` conflates "which oracle to wake" with "which repo 
 
 ```bash
 tmux new-session -d -s wasm-host -c "$MAW_JS"
-# Clean way — maw hey wraps tmux send-keys, handles cross-node over WireGuard
-maw hey wasm-host "claude --dangerously-skip-permissions -p 'implement #317'"
-# Under the hood it's: tmux send-keys -t wasm-host "claude --dangerously-skip-permissions -p 'implement #317'" Enter
+tmux send-keys -t wasm-host \
+  "claude --dangerously-skip-permissions -p 'implement #317'" Enter
 # ... then, three minutes later:
-maw hey wasm-host "remember to run: maw hey mawjs-oracle \"[wasm-host] DONE\""
-# Under the hood it's: tmux send-keys -t wasm-host "remember to run: ..." Enter
+tmux send-keys -t wasm-host \
+  "remember to run: maw hey mawjs-oracle \"[wasm-host] DONE\"" Enter
 ```
 
 The agent finished its work and exited. The follow-up `send-keys` landed in a pane with no running Claude — just a bash prompt. The text sat in the terminal buffer with nobody to read it.
@@ -117,13 +107,11 @@ Gap #3 revealed: **`-p` mode is fire-and-forget**. The reporting instructions mu
 ### Attempt 4 — Bake the report into the prompt
 
 ```bash
-# Clean way — maw hey wraps tmux send-keys, handles cross-node over WireGuard
-maw hey wasm-host "claude --dangerously-skip-permissions -p '
+tmux send-keys -t wasm-host "claude --dangerously-skip-permissions -p '
   ...task steps 1-4...
   STEP 5: ALWAYS report back:
     maw hey mawjs-oracle \"[wasm-host] DONE: ...\"
-'"
-# Under the hood it's: tmux send-keys -t wasm-host "claude --dangerously-skip-permissions -p '...'" Enter
+'" Enter
 ```
 
 This worked. The agent saw the reporting instruction as part of the initial prompt, included it in its plan, and executed it as the last step. Messages arrived in the orchestrator's pane in real time.
@@ -145,15 +133,13 @@ spawn_agent() {
   local name="$1"
   local task="$2"
   tmux new-session -d -s "$name" -c "$MAW_JS"
-  # Clean way — maw hey wraps tmux send-keys, handles cross-node over WireGuard
-  maw hey "$name" "claude --dangerously-skip-permissions -p '
+  tmux send-keys -t "$name" "claude --dangerously-skip-permissions -p '
     $task
     ---
     WHEN DONE: report back via
       maw hey $ORCHESTRATOR \"[$name] DONE: <one-line summary>\"
       maw inbox write \"[$name] <branch or PR link>\"
-  '"
-  # Under the hood it's: tmux send-keys -t "$name" "claude --dangerously-skip-permissions -p '...'" Enter
+  '" Enter
 }
 
 spawn_agent wasm-host   "Read gh issue 317. Implement the 4 host functions..."
@@ -250,7 +236,7 @@ When you notice you are reaching for the same tool repeatedly, ask whether you a
 - Tier 3 is real tmux processes. Real PIDs. Real independence. `maw peek`-able.
 - Federation agents survive parent session death. Team agents do not.
 - `claude -p` is fire-and-forget — the reporting instruction must be in the original prompt.
-- The spawn skeleton: `tmux new-session -d`, then `maw hey <name> 'claude -p ...'` to send the prompt. (`maw hey` wraps `tmux send-keys` — cleaner, federates cross-node.) Bake reporting into the prompt.
+- The spawn skeleton: `tmux new-session -d`, then `send-keys` with `claude -p`, with `maw hey` baked into the prompt.
 - Four failed attempts revealed five product gaps: cross-repo `maw wake`, repo/oracle conflation, fire-and-forget semantics, no auto-report convention, no agent status tracking.
 - Federate when the work outlives a warm window, must survive session events, or needs external visibility. Not before.
 - Comfort with a tier is not a reason to use it. Fit is.

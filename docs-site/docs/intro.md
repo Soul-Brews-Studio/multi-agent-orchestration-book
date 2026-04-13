@@ -1,14 +1,12 @@
+---
+sidebar_position: 1
+title: "Introduction"
+slug: /intro
+---
+
 # Multi-Agent Orchestration: A Practitioner's Guide
 
 **Subtitle**: From Subagents to Federation — Real Patterns from 100 Hours of Building
-
-[![Read the Book](https://img.shields.io/badge/📖_read_the_book-online-blue)](https://soul-brews-studio.github.io/multi-agent-orchestration-book/)
-
----
-
-## Read Online
-
-The book is published at **[soul-brews-studio.github.io/multi-agent-orchestration-book](https://soul-brews-studio.github.io/multi-agent-orchestration-book/)** via GitHub Pages.
 
 ---
 
@@ -49,33 +47,33 @@ The code is open source. Every file path and commit hash in this book is real an
 ## Table of Contents
 
 ### Part I: Foundations
-1. Why One Agent Isn't Enough
-2. The Three Tiers
-3. The Message Bus
-4. Task Tracking
+1. [Why One Agent Isn't Enough](ch01-why-one-agent-isnt-enough)
+2. [The Three Tiers](ch02-the-three-tiers)
+3. [The Message Bus](ch03-the-message-bus)
+4. [Task Tracking](ch04-task-tracking)
 
 ### Part II: Patterns
-5. The Research Swarm
-6. The Architecture Debate
-7. The Implementation Team
-8. The Federation Agent
-9. The Cron Loop
+5. [The Research Swarm](ch05-the-research-swarm)
+6. [The Architecture Debate](ch06-the-architecture-debate)
+7. [The Implementation Team](ch07-the-implementation-team)
+8. [The Federation Agent](ch08-the-federation-agent)
+9. [The Cron Loop](ch09-the-cron-loop)
 
 ### Part III: Infrastructure
-10. The Plugin Architecture
-11. WASM Plugin Runtime
-12. Framework Migration With Agents
+10. [The Plugin Architecture](ch10-the-plugin-architecture)
+11. [WASM Plugin Runtime](ch11-wasm-plugin-runtime)
+12. [Framework Migration With Agents](ch12-framework-migration-with-agents)
 
 ### Part IV: The Human Factor
-13. What the Human Sees
-14. Failure Modes
-15. The Future — Tier 4
+13. [What the Human Sees](ch13-what-the-human-sees)
+14. [Failure Modes](ch14-failure-modes)
+15. [The Future — Tier 4](ch15-the-future-tier-4)
 
 ### Appendices
-- A: Command Reference
-- B: Spawn Pattern Cheatsheet
-- C: Cost Analysis
-- D: Plugin Catalog
+- [A: Command Reference](appendix-a-command-reference)
+- [B: Spawn Pattern Cheatsheet](appendix-b-spawn-pattern-cheatsheet)
+- [C: Cost Analysis](appendix-c-cost-analysis)
+- [D: Plugin Catalog](appendix-d-plugin-catalog)
 
 ---
 
@@ -105,8 +103,8 @@ The three tiers in this book — in-process subagents, coordinated teams, indepe
 
 ## License + Attribution
 
-Written by: the maw-js team (Nat Weerawan + mawjs oracle)
-Session: 4833f831 (Soul-Brews-Studio/mawjs-oracle)
+Written by: the maw-js team (Nat Weerawan + mawjs oracle)  
+Session: 4833f831 (Soul-Brews-Studio/mawjs-oracle)  
 Based on code: Soul-Brews-Studio/maw-js v2.0.0-alpha.2
 
 All code examples are from public repositories. All session data is from the mawjs-oracle vault at `ψ/memory/`.

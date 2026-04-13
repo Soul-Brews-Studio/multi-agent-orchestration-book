@@ -1,3 +1,8 @@
+---
+sidebar_position: 18
+title: "Appendix B: Spawn Pattern Cheatsheet"
+---
+
 # Appendix B: Spawn Pattern Cheatsheet
 
 All three tiers on one page. Decision flowchart, one-liners, the shutdown protocols that actually work.
@@ -94,8 +99,7 @@ The full working pattern (attempt 4):
 MAW_JS="/home/neo/Code/github.com/Soul-Brews-Studio/maw-js"
 
 tmux new-session -d -s wasm-host -c "$MAW_JS"
-# Clean way — maw hey wraps tmux send-keys, handles cross-node over WireGuard
-maw hey wasm-host "claude --dangerously-skip-permissions -p '
+tmux send-keys -t wasm-host "claude --dangerously-skip-permissions -p '
   STEP 1: gh issue view 317
   STEP 2: Read src/cli/command-registry.ts
   STEP 3: Implement host functions
@@ -104,8 +108,7 @@ maw hey wasm-host "claude --dangerously-skip-permissions -p '
     maw hey mawjs-oracle \"[wasm-host] PROGRESS: <what>\"
   STEP 6: Final:
     maw hey mawjs-oracle \"[wasm-host] DONE: <branch>\" | \"STUCK: <why>\"
-'"
-# Under the hood it's: tmux send-keys -t wasm-host "claude --dangerously-skip-permissions -p '...'" Enter
+'" Enter
 ```
 
 Monitor:
