@@ -1,55 +1,56 @@
 /**
- * Multi-Agent Orchestration — Monochrome theme
+ * Multi-Agent Orchestration — Field Manual theme
  *
- * Pure black + white + gray. No accent colors.
- * Typography carries the contrast.
+ * Palette: burnt amber + deep ink-black + warm cream.
+ * Feel: battered O'Reilly paperback, written-in-the-trenches, actually useful.
+ * Avoids the default Tailwind Indigo that every AI tool ships with.
  */
 
-/* ---------- Light mode: paper ---------- */
+/* ---------- Light mode: cream paperback ---------- */
 :root {
-  --ifm-color-primary: #111111;
-  --ifm-color-primary-dark: #0a0a0a;
-  --ifm-color-primary-darker: #000000;
-  --ifm-color-primary-darkest: #000000;
-  --ifm-color-primary-light: #333333;
-  --ifm-color-primary-lighter: #555555;
-  --ifm-color-primary-lightest: #888888;
+  --ifm-color-primary: #c2410c;         /* burnt amber (amber-700) */
+  --ifm-color-primary-dark: #9a3412;    /* amber-800 */
+  --ifm-color-primary-darker: #7c2d12;  /* amber-900 */
+  --ifm-color-primary-darkest: #431407; /* amber-950 */
+  --ifm-color-primary-light: #ea580c;   /* amber-600 */
+  --ifm-color-primary-lighter: #f97316; /* amber-500 */
+  --ifm-color-primary-lightest: #fb923c;/* amber-400 */
 
-  --ifm-background-color: #ffffff;
-  --ifm-background-surface-color: #fafafa;
-  --ifm-color-emphasis-100: #f5f5f5;
-  --ifm-color-emphasis-200: #e5e5e5;
-  --ifm-navbar-background-color: #ffffff;
-  --ifm-footer-background-color: #000000;
-  --ifm-footer-color: #aaaaaa;
-  --ifm-footer-link-color: #ffffff;
+  --ifm-background-color: #fdfaf5;      /* warm paperback cream */
+  --ifm-background-surface-color: #fffbf2;
+  --ifm-color-emphasis-100: #f5efe4;
+  --ifm-color-emphasis-200: #e8ddc5;
+  --ifm-navbar-background-color: #fdfaf5;
+  --ifm-footer-background-color: #0c0a09;
+  --ifm-footer-color: #d6d3d1;
+  --ifm-footer-link-color: #fb923c;
 
-  --ifm-code-background: #f5f5f5;
-  --ifm-code-color: #111111;
+  --ifm-code-background: #f5efe4;
+  --ifm-code-color: #7c2d12;
   --ifm-code-font-size: 92%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.05);
+  --docusaurus-highlighted-code-line-bg: rgba(194, 65, 12, 0.15);
 }
 
-/* ---------- Dark mode: ink-black ---------- */
+/* ---------- Dark mode: ink-black + amber glow ---------- */
 [data-theme='dark'] {
-  --ifm-color-primary: #ffffff;
-  --ifm-color-primary-dark: #e5e5e5;
-  --ifm-color-primary-darker: #d4d4d4;
-  --ifm-color-primary-darkest: #a3a3a3;
-  --ifm-color-primary-light: #ffffff;
-  --ifm-color-primary-lighter: #ffffff;
-  --ifm-color-primary-lightest: #ffffff;
+  --ifm-color-primary: #fb923c;         /* amber-400 glow on black */
+  --ifm-color-primary-dark: #f97316;    /* amber-500 */
+  --ifm-color-primary-darker: #ea580c;  /* amber-600 */
+  --ifm-color-primary-darkest: #c2410c; /* amber-700 */
+  --ifm-color-primary-light: #fdba74;   /* amber-300 */
+  --ifm-color-primary-lighter: #fed7aa; /* amber-200 */
+  --ifm-color-primary-lightest: #ffedd5;/* amber-100 */
 
-  --ifm-background-color: #000000;
-  --ifm-background-surface-color: #0a0a0a;
-  --ifm-color-emphasis-100: #1a1a1a;
-  --ifm-color-emphasis-200: #2a2a2a;
-  --ifm-navbar-background-color: #000000;
+  --ifm-background-color: #0c0a09;      /* true ink-black */
+  --ifm-background-surface-color: #1c1917;
+  --ifm-color-emphasis-100: #292524;
+  --ifm-color-emphasis-200: #44403c;
+  --ifm-navbar-background-color: #0c0a09;
   --ifm-footer-background-color: #000000;
 
-  --ifm-code-background: #111111;
-  --ifm-code-color: #e5e5e5;
-  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.06);
+  --ifm-code-background: #1c1917;
+  --ifm-code-color: #fdba74;
+  --docusaurus-highlighted-code-line-bg: rgba(251, 146, 60, 0.18);
 }
 
 /* ---------- Book-style prose ---------- */
@@ -71,28 +72,16 @@
 }
 
 .markdown blockquote {
-  border-left: 3px solid var(--ifm-color-emphasis-400);
+  border-left: 4px solid var(--ifm-color-primary);
   background: var(--ifm-color-emphasis-100);
   font-style: italic;
   color: var(--ifm-color-emphasis-700);
   padding: 0.8em 1.2em;
-  border-radius: 0 2px 2px 0;
+  border-radius: 0 4px 4px 0;
 }
 
 [data-theme='dark'] .markdown blockquote {
   color: var(--ifm-color-emphasis-800);
-  border-left-color: var(--ifm-color-emphasis-400);
-}
-
-/* Underline links subtly instead of color-coding them */
-.markdown a {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
-}
-
-.markdown a:hover {
-  text-decoration-thickness: 2px;
 }
 
 /* ---------- GitHub icon in navbar ---------- */
@@ -110,6 +99,6 @@
 }
 
 [data-theme='dark'] .header-github-link::before {
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23fdba74' d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
     no-repeat;
 }
